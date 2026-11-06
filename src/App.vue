@@ -10,7 +10,7 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
-} from '@/components/ui/card'
+ } from '@/components/ui/card'
 
 const task = ref(JSON.parse(localStorage.getItem('tasks') || '[]'))
 
@@ -122,7 +122,7 @@ function removeTask(id) {
 
             <p class="min-h-5 text-sm text-destructive text-[crimson]">{{ error }}</p>
 
-            <Button type="submit" class="self-center bg-[pink] hover:bg-[gray] border-[1px]">Add Task</Button>
+            <Button type="submit" class="self-center bg-[pink] hover:bg-gray border-1px">Add Task</Button>
           </form>
         </CardContent>
 
@@ -159,7 +159,7 @@ function removeTask(id) {
                   class="flex flex-col gap-2 rounded-md border p-2 sm:flex-row sm:items-center"
                 >
                   <span
-                    class="flex-1 break-words"
+                    class="flex-1 wrap-break-words"
                     :class="{ 'line-through opacity-60': t.done }"
                   >
                     {{ t.text }}
