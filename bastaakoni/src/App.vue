@@ -42,6 +42,17 @@
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
+
+               <SidebarMenuItem>
+                <SidebarMenuButton as-child>
+                  <RouterLink to="/noschedule">
+                    <Calendar-off  />
+                    <span>No schedule tasks</span>
+                  </RouterLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+
               <SidebarMenuItem>
                 <SidebarMenuButton as-child>
                   <RouterLink to="/reminder">
@@ -50,8 +61,8 @@
                   </RouterLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-
-
+              
+             
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -103,7 +114,10 @@ import {
   CalendarClock,
   GalleryVerticalEnd,
   Home,
-  BellRing
+  BellRing,
+  CalendarOff,
+  CalendarCheck,
+  CalendarX
 } from 'lucide-vue-next'
 
 import { RouterLink, RouterView } from 'vue-router'
