@@ -1,22 +1,99 @@
-<template>
-    <div class="flex flex-1 items-center justify-center p-4">
-        <Card class="w-full max-w-md border border-neutral-400">
-            <CardHeader>
-                <CardTitle>My Task Manager</CardTitle>
-            </CardHeader>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
+import { CalendarClock, Trash2 } from 'lucide-vue-next'
 
-            <CardContent class="space-y-2">
-                <Label for="task">Task:</Label>
-                <div class="flex gap-2">
-                    <Input id="task" class="min-w-0 flex-1" placeholder="Enter a task" />
-                    <Input type="date" class="min-w-0 flex-1" />
-                    <Button>Add</Button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <Checkbox class="rounded-2xl border border-neutral-500" />
-                    <CalendarClock class="h-4" />
-                </div>
-            </CardContent>
-        </Card>
-    </div>
+interface Task {
+  id: number
+  text: string
+  date: string | null
+  done: boolean
+}
+
+const newTask = ref('')
+const newDate = ref('')
+const tasks = ref<Task[]>([])
+
+function addTask() {
+  if (!newTask.value.trim()) return
+  tasks.value.push({
+    id: Date.now(),
+    text: newTask.value,
+    date: newDate.value,
+    done: false,
+  })
+  newTask.value = ''
+  newDate.value = ''
+}
+
+function removeTask(id: number) {
+  tasks.value = tasks.value.filter((t) => t.id !== id)
+}
+</script>
+
+<template>
+  <div class="flex flex-1 items-center justify-center p-4">
+    <Card class="w-full max-w-md border border-neutral-400">
+      <CardHeader>
+        <CardTitle>My Task Manager</CardTitle>
+      </CardHeader>
+
+      <CardContent class="space-y-2">
+        <Label for="task">Task:</Label>
+        <div class="flex gap-2">
+          <Input
+            id="task"
+            v-model="newTask"
+            class="min-w-0 flex-1"
+            placeholder="Enter a task"
+            @keyup.enter="addTask"
+          />
+          <Input v-model="newDate" type="date" class="min-w-0 flex-1" />
+          <Button @click="addTask">Add</Button>
+        </div>
+
+        <hr class="border border-neutral-500" />
+
+        <div>
+          <h1 class="text-center"><strong>My Tasks</strong></h1>
+
+          <div class="max-h-80 space-y-2 overflow-y-auto">
+            <p v-if="tasks.length === 0" class="text-center text-sm text-neutral-500">
+              No tasks yet.
+            </p>
+
+            <div
+              v-for="task in tasks"
+              :key="task.id"
+              class="flex items-center gap-3 rounded-lg border border-neutral-300 p-3"
+            >
+              <Checkbox v-model="task.done" />
+
+              <div class="min-w-0 flex-1">
+                <p class="truncate" :class="{ 'line-through text-neutral-400': task.done }">
+                  {{ task.text }}
+                </p>
+                <p v-if="task.date" class="flex items-center gap-1 text-xs text-neutral-500">
+                  <CalendarClock class="size-3" />
+                  {{ task.date }}
+                </p>
+              </div>
+
+              <Button variant="ghost" size="icon" @click="removeTask(task.id)">
+                <Trash2 class="size-4" />
+              </Button>
+            </div>
+          </div>
+
+          <p class="text-sm text-neutral-500">
+            {{ tasks.filter((t) => !t.done).length }} task(s) left
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
 </template>

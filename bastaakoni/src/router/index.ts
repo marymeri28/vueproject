@@ -9,7 +9,7 @@ const router = createRouter({
   routes: [
     { path: '/', name: 'home', component: HomeView },
     { path: '/tasks', name: 'schedule', component: ScheduledTask },
-    { path: '/calendar', name: 'reminder', component: Reminders },
+    { path: '/reminder', name: 'reminder', component: Reminders },
   ],
 })
 
