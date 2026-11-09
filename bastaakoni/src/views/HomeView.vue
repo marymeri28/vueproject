@@ -6,9 +6,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CalendarClock, Trash2 } from 'lucide-vue-next'
+
 import { useTasks } from '@/composables/useTasks'
 
-
+const {removeTask} = useTasks()
 const { tasks, addTask } = useTasks()
 
 const newTask = ref('')
@@ -59,10 +60,11 @@ function handleAdd() {
                                     <CalendarClock class="size-3" />
                                     {{ task.date }}
                                 </p>
+
                             </div>
-
-
-
+                            <Button variant="ghost" size="icon" @click="removeTask(task.id)">
+                                <Trash2 class="size-4" />
+                            </Button>
                         </div>
                     </div>
 
