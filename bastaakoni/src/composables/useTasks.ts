@@ -1,5 +1,6 @@
 
 import { ref, computed, watch } from 'vue'
+import { searchQuery } from '@/composables/useSearch'
 
 export interface Task {
   id: number
@@ -34,7 +35,7 @@ export function useTasks() {
     if (!text.trim()) return
     tasks.value.push({
       id: Date.now(),
-      text:text.trim(),
+      text: text.trim(),
       date: date || null,
       done: false,
     })
@@ -44,7 +45,7 @@ export function useTasks() {
     tasks.value = tasks.value.filter((t) => t.id !== id)
   }
 
-function editTask(id: number, text: string, date: string | null) {
+  function editTask(id: number, text: string, date: string | null) {
     if (!text.trim()) return
     const task = tasks.value.find((t) => t.id === id)
     if (!task) return
@@ -60,7 +61,13 @@ function editTask(id: number, text: string, date: string | null) {
 
   const noScheduleTasks = computed(() => tasks.value.filter((t) => !t.date && !t.done))
 
-const CompletedTask = computed(() => tasks.value.filter((t) => t.done))
+  const CompletedTask = computed(() => tasks.value.filter((t) => t.done))
 
-return { tasks, addTask, removeTask, editTask, scheduledTasks, noScheduleTasks, CompletedTask }
+  const filteredTask = computed(() => {
+    const q = searchQuery.value.trim().toLowerCase()
+    if (!q) return tasks.value
+    return tasks.value.filter(t => t.text.toLowerCase().includes(q))
+  })
+
+  return { tasks, addTask, removeTask, editTask, scheduledTasks, noScheduleTasks, CompletedTask }
 }

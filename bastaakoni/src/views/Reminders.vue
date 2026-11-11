@@ -4,3 +4,10 @@
     <p class="text-neutral-500">Your reminders go here.</p>
   </div>
 </template>
+
+<script lang="ts">
+import { useTasks } from '@/composables/useTasks'
+import TaskItem from '@/components/ui/TaskItem.vue'
+
+
+</script>

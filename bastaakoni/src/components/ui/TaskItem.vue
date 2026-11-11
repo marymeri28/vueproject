@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
-import { CalendarClock, Trash2, Pencil, Check, X } from 'lucide-vue-next'
+import { CalendarClock, Trash2, Pencil, Check, X, Eclipse } from 'lucide-vue-next'
 import { useTasks, type Task } from '@/composables/useTasks'
+
 
 const props = defineProps<{ task: Task }>()
 const { removeTask, editTask } = useTasks()
@@ -27,6 +28,7 @@ function saveEdit() {
 function cancelEdit() {
   isEditing.value = true
 }
+
 </script>
 
 <template>
@@ -45,7 +47,6 @@ function cancelEdit() {
       </Button>
     </template>
 
-    <!-- Normal mode -->
     <template v-else>
       <Checkbox v-model="task.done" />
       <div class="min-w-0 flex-1">

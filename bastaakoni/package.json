@@ -11,7 +11,7 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "@lucide/vue": "^1.70.0",
+    "@lucide/vue": "^1.72.0",
     "@tailwindcss/vite": "^4.3.5",
     "@vueuse/core": "^15.0.0",
     "class-variance-authority": "^0.7.1",

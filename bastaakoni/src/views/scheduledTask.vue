@@ -4,7 +4,7 @@
     <p v-if="scheduledTasks.length === 0" class="text-center text-sm text-neutral-500">
       No scheduled tasks.
     </p>
-    <TaskItem v-for="task in scheduledTasks" :key="task.id" :task="task" />
+    <TaskItem v-for="task in scheduledTasks" :key="task.id" :task="task" class="mb-4" />
   </div>
 </template>
 
