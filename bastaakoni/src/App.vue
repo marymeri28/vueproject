@@ -1,90 +1,91 @@
 <template>
-  <SidebarProvider>
-    <Sidebar >
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
-              <div
-                class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <GalleryVerticalEnd class="size-4" />
-              </div>
-              <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold">Management</span>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+  <div class="select-none">
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg">
+                <div
+                  class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <GalleryVerticalEnd class="size-4" />
+                </div>
+                <div class="grid flex-1 text-left text-sm leading-tight">
+                  <span class="truncate font-semibold">Management</span>
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
 
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
 
-              <SidebarMenuItem>
-                <SidebarMenuButton as-child>
-                  <RouterLink to="/">
-                    <Home />
-                    <span>Home</span>
-                 </RouterLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-
-              <SidebarMenuItem>
-                <SidebarMenuButton as-child>
-                  <RouterLink to="/tasks">
-                    <Calendar-clock />
-                    <span>Scheduled Tasks</span>
-                  </RouterLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton as-child>
+                    <RouterLink to="/">
+                      <Home />
+                      <span>Home</span>
+                    </RouterLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
 
 
-               <SidebarMenuItem>
-                <SidebarMenuButton as-child>
-                  <RouterLink to="/noschedule">
-                    <Calendar-off  />
-                    <span>No schedule tasks</span>
-                  </RouterLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton as-child>
+                    <RouterLink to="/tasks">
+                      <Calendar-clock />
+                      <span>Scheduled Tasks</span>
+                    </RouterLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
 
 
-              <SidebarMenuItem>
-                <SidebarMenuButton as-child>
-                  <RouterLink to="/reminder">
-                    <Bell-ring />
-                    <span>Reminders</span>
-                  </RouterLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-             
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+                <SidebarMenuItem>
+                  <SidebarMenuButton as-child>
+                    <RouterLink to="/noschedule">
+                      <Calendar-off />
+                      <span>No schedule tasks</span>
+                    </RouterLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
 
-      <SidebarFooter />
-      <SidebarRail />
-    </Sidebar>
+                <SidebarMenuItem>
+                  <SidebarMenuButton as-child>
+                    <RouterLink to="/completed">
+                      <Check-Check />
+                      <span>Completed Task</span>
+                    </RouterLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
 
-    <SidebarInset>
 
-      <header
-        class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-        <div class="flex items-center gap-2 px-4">
-          <SidebarTrigger class="ml-1" />
-        </div>
-      </header>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
 
-      <RouterView />
+        <SidebarFooter />
+        <SidebarRail />
+      </Sidebar>
 
-    </SidebarInset>
-  </SidebarProvider>
+      <SidebarInset>
+
+        <header
+          class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div class="flex items-center gap-2 px-4">
+            <SidebarTrigger class="ml-1" />
+          </div>
+        </header>
+
+        <RouterView />
+
+      </SidebarInset>
+    </SidebarProvider>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -117,7 +118,8 @@ import {
   BellRing,
   CalendarOff,
   CalendarCheck,
-  CalendarX
+  CalendarX,
+  CheckCheck
 } from 'lucide-vue-next'
 
 import { RouterLink, RouterView } from 'vue-router'

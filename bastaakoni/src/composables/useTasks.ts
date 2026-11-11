@@ -1,4 +1,5 @@
-import { ref, computed } from 'vue'
+
+import { ref, computed, watch } from 'vue'
 
 export interface Task {
   id: number
@@ -7,15 +8,33 @@ export interface Task {
   done: boolean
 }
 
+const STORAGE_KEY = 'my-tasks'
 
-const tasks = ref<Task[]>([])
+function load(): Task[] {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    return saved ? JSON.parse(saved) : []
+  } catch {
+    return []
+  }
+}
+
+const tasks = ref<Task[]>(load())
+
+watch(
+  tasks,
+  (value) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+  },
+  { deep: true },
+)
 
 export function useTasks() {
   function addTask(text: string, date: string | null) {
     if (!text.trim()) return
     tasks.value.push({
       id: Date.now(),
-      text,
+      text:text.trim(),
       date: date || null,
       done: false,
     })
@@ -25,15 +44,23 @@ export function useTasks() {
     tasks.value = tasks.value.filter((t) => t.id !== id)
   }
 
+function editTask(id: number, text: string, date: string | null) {
+    if (!text.trim()) return
+    const task = tasks.value.find((t) => t.id === id)
+    if (!task) return
+    task.text = text.trim()
+    task.date = date || null
+  }
 
   const scheduledTasks = computed(() =>
     tasks.value
-      .filter((t) => t.date)
+      .filter((t) => t.date && !t.done)
       .sort((a, b) => a.date!.localeCompare(b.date!)),
   )
 
+  const noScheduleTasks = computed(() => tasks.value.filter((t) => !t.date && !t.done))
 
-  const noScheduleTasks = computed(() => tasks.value.filter((t) => !t.date))
+const CompletedTask = computed(() => tasks.value.filter((t) => t.done))
 
-  return { tasks, addTask, removeTask, scheduledTasks, noScheduleTasks }
+return { tasks, addTask, removeTask, editTask, scheduledTasks, noScheduleTasks, CompletedTask }
 }

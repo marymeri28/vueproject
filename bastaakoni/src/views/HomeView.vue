@@ -1,25 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CalendarClock, Trash2 } from 'lucide-vue-next'
-
+import { Switch } from '@/components/ui/switch'
 import { useTasks } from '@/composables/useTasks'
+import TaskItem from '@/components/ui/TaskItem.vue'
 
-const {removeTask} = useTasks()
-const { tasks, addTask } = useTasks()
+const { tasks, addTask, removeTask} = useTasks()
 
 const newTask = ref('')
 const newdate = ref('')
+const useDate = ref(false)
+
+watch(useDate, (on) => {
+    if (!on) newdate.value = ''
+})
 
 function handleAdd() {
-    addTask(newTask.value, newdate.value)
+    addTask(newTask.value, useDate.value ? newdate.value : '')
     newTask.value = ''
     newdate.value = ''
 }
+
 </script>
 
 <template>
@@ -34,12 +40,14 @@ function handleAdd() {
                 <div class="flex gap-2">
                     <Input id="task" v-model="newTask" class="min-w-0 flex-1" placeholder="Enter a task"
                         @keyup.enter="handleAdd" />
-                    <Input v-model="newdate" type="date" class="min-w-0 flex-1" />
+                    <Input v-if="useDate" v-model="newdate" type="date" class="min-w-0 flex-1" />
                     <Button @click="handleAdd">Add</Button>
                 </div>
-
+                <div class="flex gap-2">
+                    <Switch id="use-date" v-model="useDate" />
+                    <Label for="use-date" class="text-sm">Add due date</Label>
+                </div>
                 <hr class="border border-neutral-500" />
-
                 <div>
                     <h1 class="text-center"><strong>My Tasks</strong></h1>
 
